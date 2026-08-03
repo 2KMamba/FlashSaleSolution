@@ -9,6 +9,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddSingleton<MongoDbContext>();
 builder.Services.AddScoped<ProductoRepository>();
 builder.Services.AddScoped<ProductoService>();
+builder.Services.AddScoped<EventoRepository>();
+builder.Services.AddScoped<StockService>();
 builder.Services.AddControllersWithViews();
 
 // Configuración MongoDB
