@@ -1,0 +1,41 @@
+﻿@model FlashSale.DTOs.ProductoDTO
+
+@{
+    ViewData["Title"] = "Nuevo Producto";
+}
+
+<h2>Nuevo Producto</h2>
+
+<form asp-action="Create" method="post">
+
+    <div class="mb-3">
+        <label asp-for="Nombre"></label>
+        <input asp-for="Nombre" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Categoria"></label>
+        <input asp-for="Categoria" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Precio"></label>
+        <input asp-for="Precio" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="StockDisponible"></label>
+        <input asp-for="StockDisponible" class="form-control" />
+    </div>
+
+    <button type="submit" class="btn btn-success">
+        Guardar Producto
+    </button>
+
+</form>
+
+<br />
+
+<a asp-action="Index" class="btn btn-secondary">
+    Regresar
+</a>
