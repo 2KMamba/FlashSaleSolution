@@ -2,7 +2,6 @@
 using FlashSale.Models;
 using FlashSale.Services;
 using Microsoft.AspNetCore.Mvc;
-using FlashSale.Repositories;
 
 namespace FlashSale.Controllers
 {
@@ -10,13 +9,16 @@ namespace FlashSale.Controllers
     {
         private readonly StockService _service;
         private readonly ProductoService _productoService;
+        private readonly KafkaProducerService _producer;
 
         public EventoCompraController(
             StockService service,
-            ProductoService productoService)
+            ProductoService productoService,
+            KafkaProducerService producer)
         {
             _service = service;
             _productoService = productoService;
+            _producer = producer;
         }
 
         [HttpGet]
@@ -43,11 +45,12 @@ namespace FlashSale.Controllers
                     Estado = dto.Modo
                 };
 
-                await _service.Agregar(evento);
+                // Enviar a Kafka
+                await _producer.EnviarEvento(evento);
             }
 
             ViewBag.Productos = await _productoService.ObtenerTodos();
-            ViewBag.Mensaje = $"{dto.CantidadEventos} eventos generados correctamente.";
+            ViewBag.Mensaje = $"{dto.CantidadEventos} eventos enviados a Kafka correctamente.";
 
             return View();
         }

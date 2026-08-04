@@ -11,6 +11,8 @@ builder.Services.AddScoped<ProductoRepository>();
 builder.Services.AddScoped<ProductoService>();
 builder.Services.AddScoped<EventoRepository>();
 builder.Services.AddScoped<StockService>();
+builder.Services.AddSingleton<KafkaProducerService>();
+builder.Services.AddHostedService<KafkaConsumerService>();
 builder.Services.AddControllersWithViews();
 
 // Configuración MongoDB

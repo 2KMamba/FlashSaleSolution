@@ -1,0 +1,63 @@
+﻿@model List<FlashSale.Models.EventoCompra>
+
+@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<h2>Dashboard Flash Sale</h2>
+
+<div class="row">
+
+    <div class="col-md-3">
+        <div class="card text-bg-primary mb-3">
+            <div class="card-body">
+                <h3>@Model.Count</h3>
+                <p>Total de Eventos</p>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<table class="table table-bordered table-hover">
+
+    <thead class="table-dark">
+
+        <tr>
+
+            <th>Cliente</th>
+
+            <th>Producto</th>
+
+            <th>Cantidad</th>
+
+            <th>Estado</th>
+
+            <th>Fecha</th>
+
+        </tr>
+
+    </thead>
+
+    <tbody>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+
+                <td>@item.ClienteId</td>
+
+                <td>@item.ProductoId</td>
+
+                <td>@item.Cantidad</td>
+
+                <td>@item.Estado</td>
+
+                <td>@item.FechaHora.ToString("dd/MM/yyyy HH:mm:ss")</td>
+
+            </tr>
+        }
+
+    </tbody>
+
+</table>
