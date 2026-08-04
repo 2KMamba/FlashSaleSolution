@@ -2,21 +2,27 @@
 using FlashSale.Models;
 using FlashSale.Services;
 using Microsoft.AspNetCore.Mvc;
+using FlashSale.Repositories;
 
 namespace FlashSale.Controllers
 {
     public class EventoCompraController : Controller
     {
         private readonly StockService _service;
+        private readonly ProductoService _productoService;
 
-        public EventoCompraController(StockService service)
+        public EventoCompraController(
+            StockService service,
+            ProductoService productoService)
         {
             _service = service;
+            _productoService = productoService;
         }
 
         [HttpGet]
-        public IActionResult Generador()
+        public async Task<IActionResult> Generador()
         {
+            ViewBag.Productos = await _productoService.ObtenerTodos();
             return View();
         }
 
@@ -25,28 +31,23 @@ namespace FlashSale.Controllers
         {
             for (int i = 0; i < dto.CantidadEventos; i++)
             {
-                EventoCompra evento = new EventoCompra();
-
-                evento.Id = Guid.NewGuid().ToString();
-
-                evento.ProductoId = dto.ProductoId;
-
-                evento.ClienteId = "CLI-" + Random.Shared.Next(1000, 9999);
-
-                evento.Cantidad = dto.CantidadPorCompra;
-
-                evento.Precio = 950;
-
-                evento.Categoria = "Electrónica";
-
-                evento.FechaHora = DateTime.Now;
-
-                evento.Estado = "Pendiente";
+                EventoCompra evento = new EventoCompra
+                {
+                    Id = Guid.NewGuid().ToString(),
+                    ProductoId = dto.ProductoId,
+                    ClienteId = "CLI-" + Random.Shared.Next(1000, 9999),
+                    Cantidad = dto.CantidadPorCompra,
+                    Precio = 950,
+                    Categoria = "Electrónica",
+                    FechaHora = DateTime.Now,
+                    Estado = dto.Modo
+                };
 
                 await _service.Agregar(evento);
             }
 
-            ViewBag.Mensaje = "Eventos generados correctamente.";
+            ViewBag.Productos = await _productoService.ObtenerTodos();
+            ViewBag.Mensaje = $"{dto.CantidadEventos} eventos generados correctamente.";
 
             return View();
         }

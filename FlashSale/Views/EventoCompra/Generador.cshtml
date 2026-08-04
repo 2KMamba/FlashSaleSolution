@@ -9,71 +9,72 @@
 @if (ViewBag.Mensaje != null)
 {
     <div class="alert alert-success">
-
         @ViewBag.Mensaje
-
     </div>
 }
 
 <form asp-action="Generador" method="post">
 
     <div class="mb-3">
-
         <label>Producto</label>
 
-        <select asp-for="ProductoId" class="form-control">
+        <select asp-for="ProductoId" class="form-select">
 
-            <option value="Laptop Gamer">Laptop Gamer</option>
+            @foreach (var producto in ViewBag.Productos)
+            {
+                <option value="@producto.Id">
+                    @producto.Nombre
+                </option>
+            }
 
         </select>
-
     </div>
 
     <div class="mb-3">
 
-        <label>Modo</label>
+        <label class="form-label">Modo</label>
 
-        <br />
+        <div class="form-check">
+            <input class="form-check-input"
+                   type="radio"
+                   asp-for="Modo"
+                   value="Individual" />
 
-        <input type="radio"
-               name="modo"
-               value="Individual"
-               checked />
+            <label class="form-check-label">
+                Individual
+            </label>
+        </div>
 
-        Individual
+        <div class="form-check">
+            <input class="form-check-input"
+                   type="radio"
+                   asp-for="Modo"
+                   value="Masivo" />
 
-        <br />
-
-        <input type="radio"
-               name="modo"
-               value="Masivo" />
-
-        Masivo
+            <label class="form-check-label">
+                Masivo
+            </label>
+        </div>
 
     </div>
 
     <div class="mb-3">
-
         <label>Cantidad por compra</label>
 
         <input asp-for="CantidadPorCompra"
                class="form-control" />
-
     </div>
 
     <div class="mb-3">
-
         <label>Cantidad de eventos</label>
 
         <input asp-for="CantidadEventos"
                class="form-control" />
-
     </div>
 
-    <button class="btn btn-success">
-
+    <button type="submit"
+            class="btn btn-success">
         Generar Eventos
-
     </button>
 
 </form>
