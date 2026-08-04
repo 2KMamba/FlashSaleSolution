@@ -1,44 +1,73 @@
-﻿@{
+﻿@model FlashSale.DTOs.GeneradorMasivoDTO
+
+@{
     ViewData["Title"] = "Generador de Eventos";
 }
 
 <h2>Generador de Eventos</h2>
 
-<form>
+@if (ViewBag.Mensaje != null)
+{
+    <div class="alert alert-success">
+
+        @ViewBag.Mensaje
+
+    </div>
+}
+
+<form asp-action="Generador" method="post">
 
     <div class="mb-3">
+
         <label>Producto</label>
-        <select class="form-control">
-            <option>Laptop Gamer</option>
+
+        <select asp-for="ProductoId" class="form-control">
+
+            <option value="Laptop Gamer">Laptop Gamer</option>
+
         </select>
+
     </div>
 
     <div class="mb-3">
-        <label>Modo</label><br />
 
-        <input type="radio" checked />
+        <label>Modo</label>
+
+        <br />
+
+        <input type="radio"
+               name="modo"
+               value="Individual"
+               checked />
+
         Individual
 
         <br />
 
-        <input type="radio" />
+        <input type="radio"
+               name="modo"
+               value="Masivo" />
+
         Masivo
+
     </div>
 
     <div class="mb-3">
+
         <label>Cantidad por compra</label>
 
-        <input class="form-control"
-               type="number"
-               value="1" />
+        <input asp-for="CantidadPorCompra"
+               class="form-control" />
+
     </div>
 
     <div class="mb-3">
+
         <label>Cantidad de eventos</label>
 
-        <input class="form-control"
-               type="number"
-               value="1000" />
+        <input asp-for="CantidadEventos"
+               class="form-control" />
+
     </div>
 
     <button class="btn btn-success">
